@@ -1,7 +1,7 @@
 {
     "name" : "frontend",
-    "appid" : "",
-    "description" : "",
+    "appid" : "__UNI__97B0096",
+    "description" : "528软件工程前端项目",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
