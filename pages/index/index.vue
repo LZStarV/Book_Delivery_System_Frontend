@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-	href == 'https://uniapp.dcloud.io/component/README?id=uniui'
+	
 </script>
 
 <style>
