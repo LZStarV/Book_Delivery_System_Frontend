@@ -1,2 +1,4 @@
 unpackage
 /unpackage
+/node_modules
+/electron/node_modules
