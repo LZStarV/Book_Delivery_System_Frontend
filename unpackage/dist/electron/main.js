@@ -12,10 +12,10 @@ const createWindow = () => {
 		}
 	})
 	//加载本地 H5 文件（打包后使用）
-	win.loadFile(path.join(__dirname, 'index.html'));
+	// win.loadFile(path.join(__dirname, 'index.html'));
 	
 	// 开发时可直接加载 HBuilderX 的 H5 调试地址
-	// win.loadURL("http://localhost:8080");
+	win.loadURL("http://localhost:8080");
 }
 
 app.whenReady().then(() => {
