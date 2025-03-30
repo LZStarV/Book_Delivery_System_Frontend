@@ -58,6 +58,6 @@
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "electron-packager": "^17.1.2"
+		"electron": "^35.1.2"
   }
 }
