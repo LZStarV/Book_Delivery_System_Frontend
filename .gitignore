@@ -1,4 +1,3 @@
-unpackage
 unpackage/dist/build
 unpackage/dist/cache
 unpackage/dist/dev
@@ -7,3 +6,4 @@ unpackage/dist/electron/node_modules
 unpackage/dist/electron/release
 unpackage/dist/electron/static
 unpackage/dist/electron/index
+unpackage/dist/electron/index.html

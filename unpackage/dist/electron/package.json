@@ -1,0 +1,63 @@
+{
+  "name": "electron",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "productName": "Book_Delivery_System",
+    "appId": "com.example.app",
+		"asar": true,
+		"files": [
+		  "!**/node_modules/**/*",
+		      "!**/release/**/*",
+		      {
+		        "from": ".",
+		        "to": ".",
+		        "filter": [
+		          "**/*",
+		          "!node_modules"
+		        ]
+		      }
+		],
+    "directories": {
+      "output": "release",
+			"app": "."
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+			"installerIcon": "./icons/install.ico",
+			"uninstallerIcon": "./icons/uninstall.ico",
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "图书派送系统",
+      "include": "build/script/installer.nsh"
+    },
+    "win": {
+      "icon": "icons/win.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  },
+  "keywords": [],
+  "author": "LZStarV",
+  "license": "ISC",
+  "description": "electron desktop app",
+  "devDependencies": {
+		"electron": "^35.1.2",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "electron-packager": "^17.1.2"
+  }
+}
