@@ -19,7 +19,7 @@
 	
 </script>
 
-<style>
+<style lang="scss">
 	.container {
 		padding: 20px;
 		font-size: 14px;

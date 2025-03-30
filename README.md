@@ -4,16 +4,15 @@
 
 (目前暂未创建任何分支)请开发者在编辑时，将代码上传到自己的分支底下，以后再进行合并
 
-技术栈：uni-app + vue3 + electron
+技术栈：uni-app + vue3 + scss +electron
+图标库：iconfont
 
 对于node_modules，请切换淘宝镜像源进行包下载，具体操作如下：
 ```
 // 切换淘宝镜像源，改用cnpm进行包托管
 npm install -g cnpm --registry=https://registry.npmmirror.com
-// 安装electron
-cnpm install --save-dev electron
-// 安装其他依赖
-cnpm i
+// 安装依赖
+cnpm i --save-dev
 ```
 请注意，根目录与electron目录下都有package.json，所以请在两个目录下都进行安装
 
