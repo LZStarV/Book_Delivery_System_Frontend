@@ -1,43 +1,113 @@
-这里是**528软件工程前端项目**的README文件.
+# Book Delivery Frontend Project
 
-请使用**HBuilderX**打开并编辑项目.
+这里是图书派送系统前端项目的README文档。
 
-# 项目信息
+## 技术栈
 
-技术栈：[uni-app](https://uniapp.dcloud.net.cn/) + [vue3](https://cn.vuejs.org/) + [scss](https://www.sass.hk/docs/) +[electron](https://www.electronjs.org/zh/docs/latest/)
+1. 框架：[Vite](https://cn.vitejs.dev/) + [Vue3](https://cn.vuejs.org/) + [TypeScript](https://www.typescriptlang.org/zh/) + [Scss](https://www.sass.hk/)
 
-图标库：[iconfont](https://www.iconfont.cn/)
+2. UI库：[Naive-UI](https://www.naiveui.com/zh-CN/os-theme)
 
-# 快速开始
+3. 代码管理：[Github](https://github.com/)
 
-在开发项目前，请先注册好github与DCloud账号，并联系项目所有者拉入github与DCloud项目成员.
+4. 基础依赖：Vue-router, axios, pinia, jwt-decode
 
-(目前暂未创建任何分支)请开发者在编辑时，将代码上传到自己的分支底下，以后再进行合并.
+5. 代码规范：[Eslint](https://eslint.org/)
 
+## 配置须知
 
-# 环境配置
+1. 已定义别名：
 
-_请注意，目前仅在**unpackage--dist--electron**目录下有npm环境，所以请进入此目录下进行安装._
+   ```TypeScript
+   // vite.config.ts
+   alias: {
+       '@': path.resolve(__dirname, 'src'),
+       '@com': path.resolve(__dirname, './src/components'),
+       }
+   ```
 
-对于node_modules，请切换淘宝镜像源进行包下载，具体操作如下：
+2. 已省略导入文件后缀名：
+
+   ```TypeScript
+   // vite.config.ts
+   extensions: ['.js', '.ts', '.json', '.tsx']
+   ```
+
+## 开发规范
+
+### 1. TypeScript Type 开发规范
+
+#### 代码示例
+
+```TypeScript
+/**
+ * Xxx 数据类型定义
+ * @property {type} xxx - 属性描述
+ */
+export interface XxxType {
+  xxx: string | number | boolean;  // 替换为具体类型
+  yyy?: SomeOtherType;             // 可选属性
+  zzz: {
+    nestedProp: number;            // 嵌套对象
+  };
+}
 ```
-// 切换淘宝镜像源，改用cnpm进行包托管
-npm install -g cnpm --registry=https://registry.npmmirror.com
-// 安装依赖
-cnpm i --save-dev
+
+### 2. Pinia Store 开发规范
+
+#### 代码示例
+
+```TypeScript
+import { defineStore } from 'pinia';
+import { ref, type Ref } from 'vue';
+import type { XxxType } from '@/types/xxx'; // 替换成你的类型文件
+
+/**
+ * Xxx Store (例如: useUserStore, useAuthStore)
+ * 遵循标准化 Pinia Store 结构
+ * 使用箭头函数
+ */
+export const useXxxStore = defineStore('xxx', () => {
+  // ========== State (存储的数据) ==========
+  const xxxData: Ref<XxxType | null> = ref(null); //如有默认值则填写默认值
+
+  // ========== Getters (计算属性) ==========
+  const hasXxx = (): boolean => !!xxx.value;
+
+  // ========== Actions (操作方法) ==========
+  /** 设置数据 */
+  const setXxx = (newXxx: XxxType) => {
+    xxx.value = newXxx;
+    localStorage.setItem('xxx', JSON.stringify(newXxx)); // 可选：持久化存储
+  };
+
+  /** 清除数据 */
+  const clearXxx = () => {
+    xxx.value = null;
+    localStorage.removeItem('xxx'); // 可选：清除持久化存储
+  };
+
+  // ========== 返回 State + Actions ==========
+  return {
+    xxxData,
+    hasXxx,
+    setXxx,
+    clearXxx,
+  };
+});
 ```
 
-对于uni_modules，如果项目编译时显示插件缺失错误，请前往官方插件市场进行安装:[插件市场](https://ext.dcloud.net.cn/?cat1=1&cat2=11)
- uni插件列表：uni-scss, uni-ui
- 
- - 运行**electron app**办法：
-	 1. 点击**发行——网站-PC Web或手机H5**，发行H5版本(此时unpackage--dist下应已创建好build文件夹)；
-	 2. 进入dist--build--web，复制此目录下的所有文件；
-	 3. 进入dist--electron目录，粘贴刚才复制的文件；
-	 4. 检查main.js，根据需要解注相应代码：
-		- 运行：解注对应运行代码并注释打包代码，后在终端输入`npm start`即可运行；
-		- 打包：解注对应打包代码并注释运行代码，后在终端输入`npm run build`即可打包.
- 
- - 其他应用运行方法(假如使用HX)：点击**工具栏**-**运行**，即可自行选择运行模式.
- 
- 如有疑问，请联系项目所有者**LZStarV**.
+#### 总结
+
+| 部分             | 命名规范               | 示例                                |
+| :------------- | :----------------- | :-------------------------------- |
+| Store 名称       | useXxxStore        | useUserStore, useAuthStore        |
+| State (数据)     | xxxData 或 xxxInfo  | userInfo, authData                |
+| Getters (计算属性) | hasXxx, isXxx      | hasUser, isAuthenticated          |
+| Actions (方法)   | setXxx, clearXxx   | setUser, clearAuth                |
+| 持久化存储          | 使用 localStorage 同步 | localStorage.setItem('auth', ...) |
+
+## 注意
+
+1. 导入vue文件时须携带.vue后缀名，否则会报错
+

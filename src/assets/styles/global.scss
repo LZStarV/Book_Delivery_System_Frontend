@@ -1,0 +1,115 @@
+$dark-background-color: #242424;  // 深色背景颜色
+$light-background-color: #ffffff;  // 浅色背景颜色
+
+/* ======================
+   全局根元素样式
+   ====================== */
+   
+:root {
+  // 基础排版设置
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; // 字体栈（优先使用系统默认字体）
+  line-height: 1.5;             // 基准行高
+  font-weight: 400;             // 常规字重
+
+  // 颜色方案配置
+  color-scheme: light dark;      // 同时支持浅色/深色模式
+  color: rgba(255, 255, 255, 0.87); // 默认文字颜色（深色模式）
+  background-color: $dark-background-color;     // 默认背景色（深色模式）
+
+  // 字体渲染优化
+  font-synthesis: none;          // 禁止字体合成
+  text-rendering: optimizeLegibility; // 优化文本易读性
+  -webkit-font-smoothing: antialiased; // MacOS抗锯齿
+  -moz-osx-font-smoothing: grayscale; // MacOS抗锯齿
+
+  /* ======================
+     浅色模式适配
+     ====================== */
+  @media (prefers-color-scheme: light) {
+    color: #213547;             // 浅色模式文字颜色
+    background-color: $light-background-color;  // 浅色模式背景色
+  }
+}
+
+/* ======================
+   链接样式
+   ====================== */
+a {
+  font-weight: 500;             // 中等字重
+  color: #646cff;               // 默认链接颜色
+  text-decoration: inherit;     // 去除下划线
+
+  // 悬停状态
+  &:hover {
+    color: #535bf2;             // 深色模式悬停颜色
+    
+    // 浅色模式适配
+    @media (prefers-color-scheme: light) {
+      color: #747bff;           // 浅色模式悬停颜色
+    }
+  }
+}
+
+/* ======================
+   主体布局设置
+   ====================== */
+body {
+  margin: 0;                    // 去除默认边距
+  display: flex;                // 启用flex布局
+  place-items: center;          // 内容居中（flex简写）
+  min-width: 320px;            // 最小宽度约束
+  min-height: 100vh;           // 全视口高度
+}
+
+/* ======================
+   标题样式
+   ====================== */
+h1 {
+  font-size: 3.2em;             // 大标题尺寸
+  line-height: 1.1;             // 紧凑行高
+}
+
+/* ======================
+   按钮组件样式
+   ====================== */
+button {
+  // 基础样式
+  border-radius: 8px;           // 圆角半径
+  border: 1px solid transparent; // 透明边框
+  padding: 0.6em 1.2em;         // 内边距
+  font-size: 1em;               // 继承根字号
+  font-weight: 500;             // 中等字重
+  font-family: inherit;         // 继承字体
+  background-color: #1a1a1a;    // 深色模式背景
+  cursor: pointer;              // 指针样式
+  transition: border-color 0.25s; // 边框过渡动画
+
+  // 浅色模式适配
+  @media (prefers-color-scheme: light) {
+    background-color: #f9f9f9;  // 浅色模式背景
+  }
+
+  // 交互状态
+  &:hover {
+    border-color: #646cff;      // 悬停边框颜色
+  }
+  
+  &:focus,
+  &:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color; // 聚焦轮廓
+  }
+}
+
+/* ======================
+   卡片容器样式
+   ====================== */
+.card {
+  padding: 2em;                 // 内边距
+}
+
+/* ======================
+   应用主容器
+   ====================== */
+#app {
+  margin: 0 auto;              // 水平居中
+}
