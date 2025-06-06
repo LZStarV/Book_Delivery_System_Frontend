@@ -22,6 +22,7 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
     "electron": "^35.2.0",
+    "electron-builder": "^26.0.12",
     "naive-ui": "^2.41.0",
     "sass": "^1.87.0",
     "sass-loader": "^16.0.5",
