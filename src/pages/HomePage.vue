@@ -1,6 +1,7 @@
 <template>
     <div>
         <n-button type="primary">Primary</n-button>
+        <div>我加入了一条消息</div>
     </div>
 </template>
 
