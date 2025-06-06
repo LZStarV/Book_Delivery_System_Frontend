@@ -1,6 +1,7 @@
 <template>
     <div>
         <n-button type="primary">Primary</n-button>
+        <p>我跟你不一样</p>
     </div>
 </template>
 
