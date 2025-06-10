@@ -7,14 +7,13 @@ const router = createRouter({
 })
 
 // 全局前置守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach((_to, _from, next) => {
     // 返回 false 以取消导航
     next()
 })
 
 // 全局后置钩子
-router.afterEach((to, from) => {
-    const _title = to.meta.title
+router.afterEach((_to, _from) => {
 })
 
 export default router
