@@ -1,5 +1,12 @@
 import type LoginHandlerOptions from '@/types/login';
-import instance from '@/utils/http.js'
+import instance from '@/utils/http.ts'
+import { useUserStore } from '../store/user.ts';
+import { useAuthStore } from '../store/auth.ts';
+import { ElMessage } from 'element-plus';
+
+const { setUser } = useUserStore();
+const { setToken } = useAuthStore();
+
 
 export const useLoginRules = () => {
     return {
@@ -26,25 +33,38 @@ export const useLoginRules = () => {
 
 export const useLoginHandler = ({ formRef, form, loading }: LoginHandlerOptions) => {
     return async () => {
-        await formRef.value?.validate(async (errors: any) => {
-            if (!errors) {
-                loading.value = true;
-                try {
-                    const res = await instance.post('/login/', {
-                        studentid: form.studentid,
-                        password: form.password
-                    });
-                    // 登录成功后的逻辑
-                    console.log(res);
-                    
-                } catch (err: any) {
-                    // 错误消息已由 http.js 统一处理
-                } finally {
-                    loading.value = false;
-                }
+        // 校验
+        try {
+            await formRef.value?.validate();
+        } catch (errors) {
+            if (Array.isArray(errors)) {
+                // 扁平化二维数组
+                const flatErrors = errors.flat();
+                flatErrors.forEach((err) => {
+                    if (err && err.message) {
+                        ElMessage.error(err.message);
+                    }
+                });
             } else {
-                throw new Error(errors);
+                ElMessage.error('表单填写有误');
             }
-        });
+            return errors;
+        }
+        // 登录
+        loading.value = true;
+        try {
+            const res = await instance.post('/login/', {
+                studentid: form.studentid,
+                password: form.password
+            });
+            setToken(res.data.token);
+            setUser(res.data.username);
+            ElMessage.success('登录成功');
+            return res;
+        } catch (err) {
+            return err;
+        } finally {
+            loading.value = false;
+        }
     };
 }

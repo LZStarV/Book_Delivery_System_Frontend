@@ -1,7 +1,8 @@
 import type RegisterHandlerOptions from '@/types/register';
 import instance from '@/utils/http.js';
+import { ElMessage } from 'element-plus';
 
-export const useRegisterRules = () => {
+export const useRegisterRules = (form: any) => {
     return {
         username: [
             { required: true, message: '请输入用户名', trigger: ['blur', 'input'] },
@@ -28,8 +29,8 @@ export const useRegisterRules = () => {
         confirmPassword: [
             { required: true, message: '请确认密码', trigger: ['blur', 'input'] },
             {
-                validator(rule: any, value: string, callback: any, source: any) {
-                    if (value !== '' && value !== source.password) {
+                validator(rule: any, value: string) {
+                    if (value !== '' && value !== form.password) {
                         return new Error('两次输入的密码不一致');
                     }
                     return true;
@@ -42,25 +43,38 @@ export const useRegisterRules = () => {
 
 export const useRegisterHandler = ({ formRef, form, loading }: RegisterHandlerOptions) => {
     return async () => {
-        await formRef.value?.validate(async (errors: any) => {
-            if (!errors) {
-                loading.value = true;
-                try {
-                    const res = await instance.post('/register/', {
-                        username: form.username,
-                        studentid: form.studentid,
-                        password: form.password
-                    });
-                    // 注册成功后的逻辑
-                    return res;
-                } catch (err: any) {
-                    // 错误消息已由 http.js 统一处理
-                } finally {
-                    loading.value = false;
-                }
+        // 校验
+        try {
+            await formRef.value?.validate();
+        } catch (errors) {
+            // 校验未通过，分别弹出所有 message
+            if (Array.isArray(errors)) {
+                const flatErrors = errors.flat();
+                flatErrors.forEach((err) => {
+                    if (err && err.message) {
+                        ElMessage.error(err.message);
+                    }
+                });
             } else {
-                throw new Error(errors);
+                ElMessage.error('表单填写有误');
             }
-        });
+            return errors;
+        }
+        // 注册
+        loading.value = true;
+        try {
+            const res = await instance.post('/signup/', {
+                username: form.username,
+                studentid: form.studentid,
+                password: form.password
+            });
+            ElMessage.success('注册成功');
+            return res; // 返回接口响应
+        } catch (err: any) {
+            // 错误消息已由 http.js 统一处理
+            return err; // 返回错误对象
+        } finally {
+            loading.value = false;
+        }
     };
 };

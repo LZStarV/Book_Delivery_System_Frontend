@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
-import type { UserType } from '@/types/user';
+import type UserType from '@/types/user';
 
 export const useUserStore = defineStore('user', () => {
     // 用户信息定义与默认值

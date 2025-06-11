@@ -27,13 +27,13 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { useMessage, NSpace, NCard, NForm, NFormItem, NInput, NButton } from 'naive-ui';
+import { NSpace, NCard, NForm, NFormItem, NInput, NButton } from 'naive-ui';
 import { useLoginRules, useLoginHandler } from '../hooks/useLogin';
-import setMessageHandler from '@/utils/http.js'
+import { useRouter } from 'vue-router';
 
-const formRef = ref();
+const router = useRouter();
+const formRef = ref<any>();
 const loading = ref(false);
-const nmessage = useMessage();
 
 const form = reactive({
     studentid: '',
@@ -43,16 +43,13 @@ const form = reactive({
 const rules = useLoginRules();
 
 const handleLogin = async () => {
-    try {
-        setMessageHandler(nmessage);
-        const res: any = await useLoginHandler({ formRef, form, loading })();
-        if (res) {
-            nmessage.success('登录成功');
-            // ...登录成功后的逻辑...
-            console.log(res);
-        }
-    } catch (e) {
-        // 错误消息已由 http.js 统一处理
+    const loginHandler = useLoginHandler({ formRef, form, loading });
+    const res = await loginHandler();
+    // 登录成功才跳转
+    if (res && res.data) {
+        router.push('/');
+    } else {
+        // console.error(res);
     }
 };
 </script>

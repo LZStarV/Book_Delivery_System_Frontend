@@ -34,13 +34,12 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { useMessage, NSpace, NCard, NForm, NFormItem, NInput, NButton, NText } from 'naive-ui';
-import { useRegisterRules, useRegisterHandler } from '../hooks/userRegister';
-import setMessageHandler from '@/utils/http.js'
+import { useRegisterRules, useRegisterHandler } from '../hooks/useRegister';
+import { useRouter } from 'vue-router';
 
 const formRef = ref();
 const loading = ref(false);
-const nmessage = useMessage();
+const router = useRouter();
 
 const form = reactive({
     username: '',
@@ -49,19 +48,15 @@ const form = reactive({
     confirmPassword: ''
 });
 
-const rules = useRegisterRules();
+const rules = useRegisterRules(form);
 
 const handleRegister = async () => {
-    try {
-        setMessageHandler(nmessage);
-        const res: any = await useRegisterHandler({ formRef, form, loading })();
-        if (res) {
-            nmessage.success('注册成功');
-            // ...注册成功后的逻辑...
-            console.log(res);
-        }
-    } catch (e) {
-        // 错误消息已由 http.js 统一处理
+    const res = await useRegisterHandler({ formRef, form, loading })();
+    // 判断注册是否成功（假设成功时返回的res有data属性，失败时为Error或校验错误对象）
+    if (res && res.data) {
+        router.push('/login');
+    } else {
+        // console.error(res);
     }
 };
 </script>

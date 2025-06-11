@@ -4,6 +4,8 @@ import router from '@/routers/index';
 import './assets/styles/global.scss';
 import 'vfonts/Lato.css'
 import 'vfonts/FiraCode.css'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 import naive from 'naive-ui'
 import App from './App.vue'
 
@@ -13,4 +15,5 @@ createApp(App)
     .use(router)
     .use(pinia)
     .use(naive)
+    .use(ElementPlus)
     .mount('#app')
