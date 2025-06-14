@@ -30,6 +30,10 @@ const clickLogo = () => {
     align-items: center;
     height: 100%;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     .logo-image {
         height: 35px;
         margin-right: 10px;
@@ -37,7 +41,6 @@ const clickLogo = () => {
         transition: filter 600ms;
 
         &:hover {
-          cursor: pointer;
           filter: drop-shadow(0 0 2em #42b883);
         }
     }
