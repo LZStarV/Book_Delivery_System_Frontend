@@ -19,7 +19,7 @@ export const useLoginRules = () => {
             { min: 6, message: '密码至少6位', trigger: ['blur', 'input'] },
             {
                 level: 'warning' as const,
-                validator(rule: any, value: string) {
+                validator(_rule: any, value: string) {
                     if (value !== '' && !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value)) {
                         return new Error('密码需包含数字和字母');
                     }
@@ -58,10 +58,12 @@ export const useLoginHandler = ({ formRef, form, loading }: LoginHandlerOptions)
                 password: form.password
             });
             setToken(res.data.token);
-            setUser(res.data.username);
+            const user = { role: res.data.role, userData: res.data.userdata }
+            setUser(user);
             ElMessage.success('登录成功');
             return res;
-        } catch (err) {
+        } catch (err: any) {
+            ElMessage.error(err?.response?.data?.msg || '发送错误：' + err);
             return err;
         } finally {
             loading.value = false;

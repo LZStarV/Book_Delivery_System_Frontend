@@ -12,12 +12,16 @@ export const useRegisterRules = (form: any) => {
             { required: true, message: '请输入学号', trigger: ['blur', 'input'] },
             { pattern: /^[0-9]{11}$/, message: '学号格式不正确', trigger: ['blur', 'input'] }
         ],
+        email: [
+            { required: true, message: '请输入邮箱', trigger: ['blur', 'input'] },
+            { pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, message: '请输入正确的邮箱格式', trigger: 'blur' }
+        ],
         password: [
             { required: true, message: '请输入密码', trigger: ['blur', 'input'] },
             { min: 6, message: '密码至少6位', trigger: ['blur', 'input'] },
             {
                 level: 'warning' as const,
-                validator(rule: any, value: string) {
+                validator(_rule: any, value: string) {
                     if (value !== '' && !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value)) {
                         return new Error('密码需包含数字和字母');
                     }
@@ -29,7 +33,7 @@ export const useRegisterRules = (form: any) => {
         confirmPassword: [
             { required: true, message: '请确认密码', trigger: ['blur', 'input'] },
             {
-                validator(rule: any, value: string) {
+                validator(_rule: any, value: string) {
                     if (value !== '' && value !== form.password) {
                         return new Error('两次输入的密码不一致');
                     }
@@ -63,9 +67,10 @@ export const useRegisterHandler = ({ formRef, form, loading }: RegisterHandlerOp
         // 注册
         loading.value = true;
         try {
-            const res = await instance.post('/signup/', {
+            const res = await instance.post('/register/', {
                 username: form.username,
                 studentid: form.studentid,
+                email: form.email,
                 password: form.password
             });
             ElMessage.success('注册成功');

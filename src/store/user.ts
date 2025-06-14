@@ -1,32 +1,30 @@
 import { defineStore } from 'pinia';
-import { ref, type Ref } from 'vue';
+import { ref, computed } from 'vue';
 import type UserType from '@/types/user';
 
 export const useUserStore = defineStore('user', () => {
-    // 用户信息定义与默认值
-    const userData: Ref<UserType | null> = ref({
-        username: '用户'
-    });
+    // 存储用户信息
+    const user = ref<UserType | null>(JSON.parse(localStorage.getItem('user') || 'null'));
 
-    // 判断用户信息是否为空
-    const hasUser = (): boolean => !!userData.value;
+    // 计算属性：判断用户信息是否存在
+    const hasUser = computed(() => !!user.value);
 
     // 设置用户信息
     const setUser = (newUser: UserType) => {
-        userData.value = newUser;
+        user.value = newUser;
         localStorage.setItem('user', JSON.stringify(newUser));
     };
 
     // 清除用户信息
     const clearUser = () => {
-        userData.value = null;
+        user.value = null;
         localStorage.removeItem('user');
     };
 
     return {
-        userData,
+        user,
+        hasUser,
         setUser,
         clearUser,
-        hasUser
     };
 });

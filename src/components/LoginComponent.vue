@@ -6,7 +6,7 @@
                     <n-input v-model:value="form.studentid" placeholder="请输入学号" />
                 </n-form-item>
                 <n-form-item label="密码" path="password">
-                    <n-input v-model:value="form.password" type="password" show-password-on="mousedown"
+                    <n-input v-model:value="form.password" type="password" show-password-on="mousedown" v-on:keyup.enter="handleLogin"
                         placeholder="请输入密码" />
                 </n-form-item>
                 <n-form-item>
@@ -30,6 +30,7 @@ import { ref, reactive } from 'vue';
 import { NSpace, NCard, NForm, NFormItem, NInput, NButton } from 'naive-ui';
 import { useLoginRules, useLoginHandler } from '../hooks/useLogin';
 import { useRouter } from 'vue-router';
+import {ElMessage} from "element-plus";
 
 const router = useRouter();
 const formRef = ref<any>();

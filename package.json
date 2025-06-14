@@ -12,6 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@vicons/tabler": "^0.13.0",
     "axios": "^1.8.4",
     "book_delivery": "file:",
     "element-plus": "^2.10.1",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
+    "@vicons/ionicons5": "^0.13.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
     "electron": "^35.2.0",
