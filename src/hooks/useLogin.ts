@@ -63,7 +63,7 @@ export const useLoginHandler = ({ formRef, form, loading }: LoginHandlerOptions)
             ElMessage.success('登录成功');
             return res;
         } catch (err: any) {
-            ElMessage.error(err?.response?.data?.msg || '发送错误：' + err);
+            ElMessage.error(err?.response?.data?.msg || '发生错误：' + err);
             return err;
         } finally {
             loading.value = false;
