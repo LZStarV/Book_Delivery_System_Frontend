@@ -67,7 +67,7 @@ export const useRegisterHandler = ({ formRef, form, loading }: RegisterHandlerOp
         // 注册
         loading.value = true;
         try {
-            const res = await instance.post('/register/', {
+            const res = await instance.post('/auth/register', {
                 username: form.username,
                 studentid: form.studentid,
                 email: form.email,

@@ -24,6 +24,12 @@ const routes = [
         component: () => import('@/pages/profile/ProfilePage.vue')
     },
     {
+        path: '/detail/:file_uuid',
+        name: '书本详情',
+        title: '书本详情',
+        component: () => import('@/pages/detail/detailPage.vue')
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'not-found',
         component: () => import('@/pages/EmptyPage.vue'),

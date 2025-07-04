@@ -3,7 +3,7 @@ import { ElMessage } from "element-plus"
 
 // 定义Axios实例
 const instance = axios.create({
-    baseURL: "http://localhost:8000/",
+    baseURL: "http://localhost:8080/api/v1",
     timeout: 3000
 })
 
