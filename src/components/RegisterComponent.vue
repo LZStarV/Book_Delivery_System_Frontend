@@ -5,19 +5,19 @@
                 <n-form-item label="用户名" path="username">
                     <n-input v-model:value="form.username" placeholder="请输入用户名" />
                 </n-form-item>
-                <n-form-item label="学号" path="studentid">
-                    <n-input v-model:value="form.studentid" placeholder="请输入学号" />
+                <n-form-item label="电话" path="phone">
+                    <n-input v-model:value="form.phone" placeholder="请输入电话" />
                 </n-form-item>
                 <n-form-item label="邮箱" path="email">
-                  <n-input v-model:value="form.email" placeholder="请输入邮箱" />
+                    <n-input v-model:value="form.email" placeholder="请输入邮箱" />
                 </n-form-item>
                 <n-form-item label="密码" path="password">
                     <n-input v-model:value="form.password" type="password" show-password-on="mousedown"
                         placeholder="请输入密码" />
                 </n-form-item>
                 <n-form-item label="确认密码" path="confirmPassword">
-                    <n-input v-model:value="form.confirmPassword" type="password" show-password-on="mousedown" v-on:keyup.enter="handleRegister"
-                        placeholder="请再次输入密码" />
+                    <n-input v-model:value="form.confirmPassword" type="password" show-password-on="mousedown"
+                        v-on:keyup.enter="handleRegister" placeholder="请再次输入密码" />
                 </n-form-item>
                 <n-form-item>
                     <n-button type="primary" block :loading="loading" @click="handleRegister">
@@ -46,7 +46,7 @@ const router = useRouter();
 
 const form = reactive({
     username: '',
-    studentid: '',
+    phone: '',
     email: '',
     password: '',
     confirmPassword: ''

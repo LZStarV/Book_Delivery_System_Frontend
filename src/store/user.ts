@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type UserType from '@/types/user';
+import type User from '@/types/user';
 
 export const useUserStore = defineStore('user', () => {
     // 存储用户信息
-    const user = ref<UserType | null>(JSON.parse(localStorage.getItem('user') || 'null'));
+    const user = ref<User | null>(JSON.parse(localStorage.getItem('user') || 'null'));
 
     // 计算属性：判断用户信息是否存在
     const hasUser = computed(() => !!user.value);
 
     // 设置用户信息
-    const setUser = (newUser: UserType) => {
+    const setUser = (newUser: User) => {
         user.value = newUser;
         localStorage.setItem('user', JSON.stringify(newUser));
     };

@@ -1,24 +1,29 @@
 {
   "name": "book_delivery",
+  "description": "Book Delivery System Frontend",
+  "author": "LZStarV",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist-electron/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "dev": "vite",
     "start": "electron .",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview",
-    "test": "vitest"
+    "build": "vite build",
+    "electron:dev": "concurrently \"vite\" \"electron .\"",
+    "electron:build": "electron-builder --config .electron-builder.config.cjs",
+    "test": "vitest",
+    "clean": "rimraf dist dist-electron node_modules/.cache"
+  },
+  "build": {
+    "extends": ".electron-builder.config.cjs"
   },
   "dependencies": {
     "@vicons/tabler": "^0.13.0",
     "axios": "^1.8.4",
-    "book_delivery": "file:",
     "element-plus": "^2.10.1",
     "jwt-decode": "^4.0.0",
     "pinia": "^3.0.2",
-    "vitest": "^3.2.3",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
@@ -27,9 +32,11 @@
     "@vicons/ionicons5": "^0.13.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
-    "electron": "^35.2.0",
+    "concurrently": "^8.2.2",
+    "electron": "^35.7.0",
     "electron-builder": "^26.0.12",
     "naive-ui": "^2.41.0",
+    "rimraf": "^5.0.7",
     "sass": "^1.87.0",
     "sass-loader": "^16.0.5",
     "typescript": "~5.7.2",
@@ -37,6 +44,7 @@
     "vite": "^6.2.0",
     "vite-plugin-electron": "^0.29.0",
     "vite-plugin-electron-renderer": "^0.14.6",
+    "vitest": "^3.2.3",
     "vue-tsc": "^2.2.4"
   }
 }

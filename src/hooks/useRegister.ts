@@ -8,9 +8,9 @@ export const useRegisterRules = (form: any) => {
             { required: true, message: '请输入用户名', trigger: ['blur', 'input'] },
             { min: 1, message: '用户名不能为空', trigger: ['blur', 'input'] }
         ],
-        studentid: [
-            { required: true, message: '请输入学号', trigger: ['blur', 'input'] },
-            { pattern: /^[0-9]{11}$/, message: '学号格式不正确', trigger: ['blur', 'input'] }
+        phone: [
+            { required: true, message: '请输入电话', trigger: ['blur', 'input'] },
+            { pattern: /^[0-9]{11}$/, message: '电话格式不正确', trigger: ['blur', 'input'] }
         ],
         email: [
             { required: true, message: '请输入邮箱', trigger: ['blur', 'input'] },
@@ -69,7 +69,7 @@ export const useRegisterHandler = ({ formRef, form, loading }: RegisterHandlerOp
         try {
             const res = await instance.post('/auth/register', {
                 username: form.username,
-                studentid: form.studentid,
+                phone: form.phone,
                 email: form.email,
                 password: form.password
             });

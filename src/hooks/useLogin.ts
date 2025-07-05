@@ -10,9 +10,9 @@ const { setToken } = useAuthStore();
 
 export const useLoginRules = () => {
     return {
-        studentid: [
-            { required: true, message: '请输入学号', trigger: ['blur', 'input'] },
-            { pattern: /^[0-9]{11}$/, message: '学号格式不正确', trigger: ['blur', 'input'] }
+        email: [
+            { required: true, message: '请输入邮箱', trigger: ['blur', 'input'] },
+            { pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, message: '邮箱格式不正确', trigger: ['blur', 'input'] }
         ],
         password: [
             { required: true, message: '请输入密码', trigger: ['blur', 'input'] },
@@ -53,13 +53,12 @@ export const useLoginHandler = ({ formRef, form, loading }: LoginHandlerOptions)
         // 登录
         loading.value = true;
         try {
-            const res = await instance.post('/login/', {
-                studentid: form.studentid,
+            const res = await instance.post('/auth/login', {
+                email: form.email,
                 password: form.password
             });
             setToken(res.data.token);
-            const user = { role: res.data.role, userData: res.data.userdata }
-            setUser(user);
+            setUser(res.data.user);
             ElMessage.success('登录成功');
             return res;
         } catch (err: any) {

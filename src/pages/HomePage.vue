@@ -194,6 +194,7 @@ const handlePageChange = (page: number) => {
 
 // 处理查看操作
 const goToDetail = (fileUuid: string) => {
+  console.log(`查看文件详情: ${fileUuid}`);
   router.push({ name: '书本详情', params: { file_uuid: fileUuid } })
 }
 

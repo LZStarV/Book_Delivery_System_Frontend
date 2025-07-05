@@ -1,7 +1,7 @@
 <template>
     <div class="logo-content" @click="clickLogo">
         <img src="@/assets/vue.svg" alt="Logo" class="logo-image" />
-        <span class="logo-text">图书派送系统</span>
+        <span class="logo-text">图书查阅系统</span>
     </div>
 </template>
 
@@ -31,7 +31,7 @@ const clickLogo = () => {
     height: 100%;
 
     &:hover {
-      cursor: pointer;
+        cursor: pointer;
     }
 
     .logo-image {
@@ -41,7 +41,7 @@ const clickLogo = () => {
         transition: filter 600ms;
 
         &:hover {
-          filter: drop-shadow(0 0 2em #42b883);
+            filter: drop-shadow(0 0 2em #42b883);
         }
     }
 

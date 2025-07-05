@@ -1,34 +1,43 @@
-import { app, BrowserWindow, Menu } from "electron";
+import { app, BrowserWindow } from "electron";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const isDev = !app.isPackaged;
 
 const createWindow = () => {
 
     const win = new BrowserWindow({
         width: 1200,
         height: 800,
+        // frame: false, // 取消注释此行以完全移除窗口边框
         webPreferences: {
-            contextIsolation: false, // 是否开启隔离上下文
-            nodeIntegration: true, // 渲染进程使用Node API
-            enableRemoteModule: true, // 可以使用remote方法
-            preload: "./preload.js",
+            contextIsolation: false,
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            preload: path.join(__dirname, "preload.js"),
         },
     });
-    const url = "http://localhost:5173";
-    win.loadURL(url);
+    win.setMenuBarVisibility(false); // 隐藏菜单栏
+    if (isDev) {
+        win.loadURL("http://localhost:5173");
+        win.webContents.openDevTools(); // 开发环境保留调试工具
+    } else {
+        win.loadFile(path.join(__dirname, "../dist/index.html"));
+        // 生产环境不打开调试工具
+    }
 };
 
-
 app.whenReady().then(() => {
-    createWindow()
+    createWindow();
 
-    app.on('activate', function () {
-        // 通常在 macOS 上，当点击 dock 中的应用程序图标时，如果没有其他
-        // 打开的窗口，那么程序会重新创建一个窗口。
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
-    })
-})
+    app.on("activate", function () {
+        if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
+});
 
-// 除了 macOS 外，当所有窗口都被关闭的时候退出程序。 因此，通常对程序和它们在
-// 任务栏上的图标来说，应当保持活跃状态，直到用户使用 Cmd + Q 退出。
-app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') app.quit()
-})
+app.on("window-all-closed", function () {
+    if (process.platform !== "darwin") app.quit();
+});

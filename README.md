@@ -1,113 +1,114 @@
 # Book Delivery Frontend Project
 
-这里是图书派送系统前端项目的README文档。
+这是一个基于 Vue3 + Vite + Electron 的图书派送系统前端项目，实现了图书管理、订单处理、用户权限等核心功能。以下是项目的详细说明。
+
 
 ## 技术栈
 
-1. 框架：[Vite](https://cn.vitejs.dev/) + [Vue3](https://cn.vuejs.org/) + [TypeScript](https://www.typescriptlang.org/zh/) + [Scss](https://www.sass.hk/)
+1. **前端框架**：[Vite](https://cn.vitejs.dev/) + [Vue3](https://cn.vuejs.org/) + [TypeScript](https://www.typescriptlang.org/zh/) + [Scss](https://www.sass.hk/)
+2. **UI 库**：[Naive-UI](https://www.naiveui.com/zh-CN/os-theme)
+3. **状态管理**：[Pinia](https://pinia.vuejs.org/)
+4. **路由管理**：[Vue Router](https://router.vuejs.org/zh/)
+5. **HTTP 请求**：[Axios](https://axios-http.com/)
+6. **JWT 认证**：[jwt-decode](https://github.com/auth0/jwt-decode)
+7. **跨平台打包**：[Electron](https://www.electronjs.org/) + [electron-builder](https://www.electron.build/)
+8. **代码管理**：[Github](https://github.com/)
 
-2. UI库：[Naive-UI](https://www.naiveui.com/zh-CN/os-theme)
 
-3. 代码管理：[Github](https://github.com/)
+## 系统要求
 
-4. 基础依赖：Vue-router, axios, pinia, jwt-decode
+- **操作系统**：Windows 10/11、macOS、Linux
+- **Node.js**：v18.0.0 及以上
+- **npm**：v9.0.0 及以上
 
-5. 代码规范：[Eslint](https://eslint.org/)
 
-## 配置须知
+## 安装与配置
 
-1. 已定义别名：
+### 1. 克隆项目
 
-   ```TypeScript
-   // vite.config.ts
-   alias: {
-       '@': path.resolve(__dirname, 'src'),
-       '@com': path.resolve(__dirname, './src/components'),
-       }
-   ```
-
-2. 已省略导入文件后缀名：
-
-   ```TypeScript
-   // vite.config.ts
-   extensions: ['.js', '.ts', '.json', '.tsx']
-   ```
-
-## 开发规范
-
-### 1. TypeScript Type 开发规范
-
-#### 代码示例
-
-```TypeScript
-/**
- * Xxx 数据类型定义
- * @property {type} xxx - 属性描述
- */
-export interface XxxType {
-  xxx: string | number | boolean;  // 替换为具体类型
-  yyy?: SomeOtherType;             // 可选属性
-  zzz: {
-    nestedProp: number;            // 嵌套对象
-  };
-}
+```bash
+git clone https://github.com/LZStarV/book_delivery.git
+cd book_delivery
 ```
 
-### 2. Pinia Store 开发规范
+### 2. 安装依赖
 
-#### 代码示例
-
-```TypeScript
-import { defineStore } from 'pinia';
-import { ref, type Ref } from 'vue';
-import type { XxxType } from '@/types/xxx'; // 替换成你的类型文件
-
-/**
- * Xxx Store (例如: useUserStore, useAuthStore)
- * 遵循标准化 Pinia Store 结构
- * 使用箭头函数
- */
-export const useXxxStore = defineStore('xxx', () => {
-  // ========== State (存储的数据) ==========
-  const xxxData: Ref<XxxType | null> = ref(null); //如有默认值则填写默认值
-
-  // ========== Getters (计算属性) ==========
-  const hasXxx = (): boolean => !!xxx.value;
-
-  // ========== Actions (操作方法) ==========
-  /** 设置数据 */
-  const setXxx = (newXxx: XxxType) => {
-    xxx.value = newXxx;
-    localStorage.setItem('xxx', JSON.stringify(newXxx)); // 可选：持久化存储
-  };
-
-  /** 清除数据 */
-  const clearXxx = () => {
-    xxx.value = null;
-    localStorage.removeItem('xxx'); // 可选：清除持久化存储
-  };
-
-  // ========== 返回 State + Actions ==========
-  return {
-    xxxData,
-    hasXxx,
-    setXxx,
-    clearXxx,
-  };
-});
+```bash
+npm install
 ```
 
-#### 总结
+### 3. 开发环境运行
 
-| 部分             | 命名规范               | 示例                                |
-| :------------- | :----------------- | :-------------------------------- |
-| Store 名称       | useXxxStore        | useUserStore, useAuthStore        |
-| State (数据)     | xxxData 或 xxxInfo  | userInfo, authData                |
-| Getters (计算属性) | hasXxx, isXxx      | hasUser, isAuthenticated          |
-| Actions (方法)   | setXxx, clearXxx   | setUser, clearAuth                |
-| 持久化存储          | 使用 localStorage 同步 | localStorage.setItem('auth', ...) |
+```bash
+# 启动 Vite 开发服务器和 Electron
+npm run electron:dev
+```
 
-## 注意
+### 4. 生产环境打包
 
-1. 导入vue文件时须携带.vue后缀名，否则会报错
+```bash
+# 构建 Vue 应用并打包 Electron 应用
+npm run electron:build
+```
 
+打包后的安装程序将生成在 `dist_electron` 目录下。
+
+
+## 项目结构
+
+```
+book_delivery/
+├── build/                 # 打包资源（图标、安装包配置）
+├── dist/                  # Vite 构建输出目录
+├── dist_electron/         # Electron 打包输出目录
+├── electron/              # Electron 主进程和预加载脚本
+│   ├── main.js            # 主进程入口
+│   └── preload.js         # 预加载脚本
+├── src/                   # 前端源代码
+│   ├── assets/            # 静态资源
+│   ├── components/        # 通用组件
+│   ├── router/            # 路由配置
+│   ├── stores/            # Pinia 状态管理
+│   ├── styles/            # 全局样式
+│   ├── utils/             # 工具函数
+│   └── App.vue            # 应用入口组件
+├── .electron-builder.config.cjs # Electron 打包配置
+├── package.json           # 项目依赖和脚本
+├── tsconfig.json          # TypeScript 配置
+└── vite.config.ts         # Vite 配置
+```
+
+
+## 环境变量配置
+
+项目使用 `.env` 文件配置环境变量：
+
+```env
+# .env.development（开发环境）
+VITE_APP_API_BASE_URL=http://localhost:3000/api
+
+# .env.production（生产环境）
+VITE_APP_API_BASE_URL=https://api.example.com
+```
+
+
+## 打包与发布
+
+1. 确保已安装所有依赖：`npm install`
+2. 执行打包命令：`npm run electron:build`
+3. 打包后的安装程序将生成在 `dist_electron` 目录下
+4. 支持多平台打包：Windows (.exe)、macOS (.dmg)、Linux (.AppImage)
+
+
+## 常见问题与解决方案
+
+1. **打包时提示缺少 main.js**  
+   确保 `electron/main.js` 文件存在，并且 `vite.config.ts` 正确配置了主进程入口。
+
+2. **Windows 打包失败，权限不足**  
+   - 以管理员身份运行终端
+   - 启用 Windows 开发者模式
+   - 参考：[解决 Windows 符号链接权限问题](https://github.com/electron-userland/electron-builder/issues/4067)
+
+3. **开发环境白屏**  
+   检查 Vite 开发服务器是否正常启动（默认端口 5173），确保 `electron/main.js` 中正确配置了开发环境的 URL。

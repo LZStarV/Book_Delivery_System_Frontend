@@ -4,16 +4,15 @@ import vue from '@vitejs/plugin-vue'
 import electron from "vite-plugin-electron";
 import electronRenderer from "vite-plugin-electron-renderer";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     electron([
       {
-        entry: "electron/main.js",
+        entry: path.resolve(__dirname, "electron/main.js"),
       },
       {
-        entry: "electron/preload.js",
+        entry: path.resolve(__dirname, "electron/preload.js"),
       },
     ]),
     electronRenderer(),
@@ -37,7 +36,7 @@ export default defineConfig({
   },
   build: {
     emptyOutDir: false,
-    outDir: "dist-electron",
+    outDir: "dist",
   },
   base: './'
 })

@@ -1,55 +1,53 @@
 <template>
-    <n-grid x-gap="12" :cols="12">
-      <!-- 左侧 Logo 部分 -->
-      <n-gi :span="2">
-        <LogoComponent :current-route="currentRoute" />
-      </n-gi>
+  <n-grid x-gap="12" :cols="12">
+    <!-- 左侧 Logo 部分 -->
+    <n-gi :span="2">
+      <LogoComponent :current-route="currentRoute" />
+    </n-gi>
 
-      <n-gi :span="7"></n-gi>
+    <n-gi :span="7"></n-gi>
 
-      <!-- 右侧部分 -->
-      <n-gi :span="3">
+    <!-- 右侧部分 -->
+    <n-gi :span="3">
 
-        <n-grid :cols="6">
-          <!-- 通知 -->
-          <n-gi :span="1">
-            <div>
-              <n-badge class="notice" :value="noticeNum" :max="10">
-                <n-icon :size="30" :component="Bell" />
-              </n-badge>
-            </div>
-          </n-gi>
+      <n-grid :cols="6">
+        <!-- 通知 -->
+        <n-gi :span="1">
+          <div>
+            <n-badge class="notice" :value="noticeNum" :max="10">
+              <n-icon :size="30" :component="Bell" />
+            </n-badge>
+          </div>
+        </n-gi>
 
-          <!-- 用户名 -->
-          <n-gi :span="4">
-            <div>
-              <n-dropdown trigger="hover" :options="dropdownOptions" @select="handleDropdown">
-                <n-text class="username">
-                  你好，{{ username }}
-                  <n-icon class="icon" :size="25">
-                    <ChevronDownOutline />
-                  </n-icon>
-                </n-text>
-              </n-dropdown>
-            </div>
-          </n-gi>
+        <!-- 用户名 -->
+        <n-gi :span="4">
+          <div>
+            <n-dropdown trigger="hover" :options="dropdownOptions" @select="handleDropdown">
+              <n-text class="username">
+                你好，{{ username }}
+                <n-icon class="icon" :size="25">
+                  <ChevronDownOutline />
+                </n-icon>
+              </n-text>
+            </n-dropdown>
+          </div>
+        </n-gi>
 
-          <!-- 用户头像 -->
-          <n-gi :span="1">
-            <div>
-              <n-avatar class="avatar" :src="avatar"
-              fallback-src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
-              size="medium"
-              />
-            </div>
-          </n-gi>
+        <!-- 用户头像 -->
+        <n-gi :span="1">
+          <div @click="router.push('/profile')">
+            <n-avatar class="avatar" :src="avatar"
+              fallback-src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" size="medium" />
+          </div>
+        </n-gi>
 
-        </n-grid>
+      </n-grid>
 
-      </n-gi>
+    </n-gi>
 
 
-    </n-grid>
+  </n-grid>
 </template>
 
 <script setup>
@@ -71,8 +69,8 @@ const authStore = useAuthStore()
 const userStore = useUserStore()
 const dialog = useDialog()
 
-const avatar = userStore.user?.avatar || 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
-const user = userStore.user?.userData || 'xxx'
+const user = userStore.user || null
+const avatar = user.avatar || 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
 const username = user.username || 'xxx'
 
 const dropdownOptions = [
@@ -89,7 +87,7 @@ const dropdownOptions = [
   }
 ]
 
-function handleDropdown(key) {
+const handleDropdown = (key) => {
   if (key === 'profile') {
     router.push('/profile')
   } else if (key === 'logout') {
@@ -104,7 +102,15 @@ function handleDropdown(key) {
         ElMessage.success('已成功退出登录！')
         router.push('/login')
       }
-  })
+    })
+  }
+}
+
+const clickLogo = () => {
+  if (props.currentRoute === '/') {
+    ElMessage.success('您已位于首页');
+  } else {
+    router.push('/')
   }
 }
 </script>
@@ -127,6 +133,7 @@ function handleDropdown(key) {
 
     .n-icon {
       transition: color 0.2s;
+
       &:hover {
         color: #26a05a;
       }

@@ -1,7 +1,7 @@
 export interface LoginHandlerOptions {
     formRef: any;
     form: {
-        studentid: string;
+        phone: string;
         password: string;
     };
     loading: { value: boolean };

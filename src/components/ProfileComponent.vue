@@ -9,7 +9,7 @@
             {{ roleName[role] }}
           </n-tag>
         </div>
-        <p class="studentid-and-email">学号：{{ user.studentid }}</p>
+        <p class="studentid-and-email">电话：{{ user.phone }}</p>
         <p class="studentid-and-email">邮箱：{{ user.email }}</p>
       </div>
       <n-space class="action-buttons">
@@ -34,12 +34,7 @@
     </div>
   </n-card>
 
-  <n-upload
-      multiple
-      directory-dnd
-      action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
-      :max="5"
-  >
+  <n-upload multiple directory-dnd action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f" :max="5">
     <n-upload-dragger>
       <div style="margin-bottom: 12px">
         <n-icon size="48" :depth="3">
@@ -66,8 +61,8 @@ import { useUserStore } from "@/store/user.js";
 
 const userStore = useUserStore();
 
-const user = userStore.user.userData;
-const role = userStore.user.role;
+const user = userStore.user;
+const role = user.userType;
 
 const bookshelf = [
   { id: 1, title: '算法导论', cover: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg' },
@@ -77,13 +72,13 @@ const bookshelf = [
 
 const identityTagType = {
   1: 'error',
-  2: 'info',
+  'NORMAL': 'info',
   3: 'success'
 }
 
 const roleName = {
   1: '管理员',
-  2: '用户',
+  'NORMAL': '用户',
   3: '志愿者'
 }
 
@@ -94,9 +89,7 @@ function onSetting() {
 </script>
 
 <style scoped lang="scss">
-.user-card {
-
-}
+.user-card {}
 
 .user-info-wrapper {
   display: flex;
@@ -126,6 +119,7 @@ function onSetting() {
 
   }
 }
+
 .studentid-and-email {
   font-size: 18px;
   margin-bottom: 6px;
